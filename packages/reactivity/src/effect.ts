@@ -113,6 +113,7 @@ export function resumeTracking() {
   shouldTrack = true
 }
 
+// get时调用
 export function track(
   target: any,
   type: OperationTypes,
@@ -149,6 +150,7 @@ export function track(
   }
 }
 
+// set时触发
 export function trigger(
   target: any,
   type: OperationTypes,
@@ -162,6 +164,7 @@ export function trigger(
   }
   const effects = new Set<ReactiveEffect>()
   const computedRunners = new Set<ReactiveEffect>()
+  console.log('trigger effect: ', key, depsMap)
   if (type === OperationTypes.CLEAR) {
     // collection being cleared, trigger all effects for target
     depsMap.forEach(dep => {
@@ -192,6 +195,7 @@ function addRunners(
   computedRunners: Set<ReactiveEffect>,
   effectsToAdd: Set<ReactiveEffect> | undefined
 ) {
+  console.log('addRunners: ', effectsToAdd)
   if (effectsToAdd !== void 0) {
     effectsToAdd.forEach(effect => {
       if (effect.computed) {
